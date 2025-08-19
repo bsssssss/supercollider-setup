@@ -1,0 +1,9 @@
+[submodule "quarks/LanguageServer"]
+	path = quarks/LanguageServer
+	url = git@github.com:bsssssss/LanguageServer.quark.git
+[submodule "quarks/BssOS"]
+	path = quarks/BssOS
+	url = git@github.com:bsssssss/BssOS.git
+[submodule "quarks/superdirt"]
+	path = quarks/superdirt
+	url = git@github.com:bsssssss/SuperDirt.git

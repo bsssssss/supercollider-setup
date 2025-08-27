@@ -7,7 +7,7 @@ var loadAndReplace = { |path, charToReplace, depth|
 };
 
 // tidal-drum-machines :
-loadAndReplace.("/Users/bss/Documents/git/samples/tidal-drum-machines/machines", "-", 2);
+loadAndReplace.("/Users/bss/Sounds/tidal_samples/tidal-drum-machines/machines", "-", 2);
 
 // undo
 loadAndReplace.("/Volumes/T7 Shield/sons/samples/tidal-samples/undo", "_", 1);

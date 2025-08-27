@@ -1,4 +1,3 @@
-s.meter;
 (
 // server options are only updated on reboot
 // configure the sound server: here you could add hardware specific options

@@ -68,10 +68,10 @@ Synth("kick", [dur: 1]);
 		var rep, dur, freq;
 
 		rep = [1,2,3,5,8].choose;
-		freq = [20, 30, 40, 50].choose;
+		freq = [20, 30, 40, 50, 80].choose;
 
 		if (rep > 1) {
-			dur = [1/6, 1/8, 1/16].choose;
+			dur = [1/6, 1/8, 1/16, 1/32].choose;
 		} {
 			dur = [1/2, 1, 1.5, 2, 3].choose;
 		};

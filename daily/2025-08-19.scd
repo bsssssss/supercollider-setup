@@ -1,4 +1,4 @@
-s.reboot;
+s.boot;
 s.meter;
 
 (
@@ -21,13 +21,13 @@ SynthDef("kick", {
 	var dur = \dur.kr(1);
 
 	penv = EnvGen.ar(
-		Env([1,0], [0.4], [-8]),
-	).linlin(0, 1, 40, 200);
+		Env([1,0], [0.01], [-8]),
+	).linlin(0, 1, 40, 500);
 
 	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: -4).ar(Done.freeSelf);
 	snd = snd * 1.8;
 	snd = snd.tanh;
-	snd = snd * -12.dbamp;
+	snd = snd * -6.dbamp;
 	snd = snd ! 2;
 
 	Out.ar(\bus.kr(0), snd)

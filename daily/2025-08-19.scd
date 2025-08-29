@@ -67,10 +67,10 @@ Synth("kick", [dur: 1]);
 	inf.do {
 		var rep, dur, del, freq;
 
-		rep = [1, 2, 3, 5, 8].choose;
+		rep = [1, 4, 6, 8].choose;
 		freq = [20, 30, 40, 50, 80].choose;
 
-		if (rep > 2) {
+		if (rep > 1) {
 			dur = [1/6, 1/8, 1/16, 1/32].choose;
 			del = dur * 0.5;
 		} {

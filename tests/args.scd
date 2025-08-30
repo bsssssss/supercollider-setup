@@ -1,5 +1,3 @@
 (
-SynthDef("test" {
-	| arg1=\sym |
-}).add;
+{ |arg1 arg2 = 0, arg3(\symbol)| };
 )

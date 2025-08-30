@@ -8,8 +8,8 @@ SynthDef("resaw", {
 	var freq = \freq.kr(33);
 
 	snd = Pulse.ar(freq) ! 2;
-	snd = RHPF.ar(snd, XLine.ar(22050, freq, dur), 0.99);
-	snd = BPF.ar(snd, XLine.ar(22050, freq, dur), 0.99);
+	snd = RHPF.ar(snd, XLine.ar(22050, freq, dur), 0.8);
+	snd = BPF.ar(snd, XLine.ar(22050, freq, dur), 0.7);
 	snd = snd * Env.perc(0, dur, curve: 8).ar(Done.freeSelf);
 	snd = snd * -3.dbamp;
 
@@ -23,8 +23,8 @@ SynthDef("kick", {
 
 	penv = EnvGen.ar( Env([1,0], [0.01], [-8]))
 		.linlin(0, 1, 0, 500);
-	penv = penv + Env.perc(0, dur/3).ar
-		.linlin(0, 1, freq, freq * 1.5);
+	penv = penv + Env.perc(0, dur).ar
+		.linlin(0, 1, 20, freq);
 
 	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: 0).ar(Done.freeSelf);
 	snd = snd * -3.dbamp;
@@ -80,7 +80,7 @@ Synth("kick", [dur: 1]);
 
 		rep.do {
 			s.bind {
-				Synth("kick", [dur: dur / 2, freq: freq]);
+				Synth("kick", [dur: dur + del, freq: 80]);
 			};
 			del.wait;
 			s.bind {

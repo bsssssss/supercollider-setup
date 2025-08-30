@@ -22,7 +22,6 @@ var numChannels = ~dirt.numChannels;
 	x.initNodeTree;
 };
 )
-s.plotTree;
 
 //~dirt.orbits.do { |x| 
 //	x.globalEffects.postln;

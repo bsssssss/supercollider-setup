@@ -6,10 +6,11 @@ SynthDef("resaw", {
 	var snd;
 	var dur = \dur.kr(1);
 	var freq = \freq.kr(33);
+	var cutoffs = \cutoffs.kr([22050, 33]);
 
 	snd = Pulse.ar(freq) ! 2;
-	snd = RHPF.ar(snd, XLine.ar(22050, freq, dur), 0.8);
-	snd = BPF.ar(snd, XLine.ar(22050, freq, dur), 0.7);
+	snd = RHPF.ar(snd, XLine.ar(cutoffs[0], cutoffs[1], dur), 0.8);
+	snd = BPF.ar(snd, XLine.ar(cutoffs[0], cutoffs[1], dur), 0.7);
 	snd = snd * Env.perc(0, dur, curve: 8).ar(Done.freeSelf);
 	snd = snd * -3.dbamp;
 
@@ -52,7 +53,7 @@ Synth("kick", [dur: 1]);
 
 		rep.do {
 			s.bind {
-				Synth("resaw", [dur: dur, freq: freq]);
+				Synth("resaw", [dur: dur, freq: freq, cutoffs: [22050, freq]]);
 				Synth("kick", [dur: dur]);
 			};
 			dur.wait;
@@ -65,7 +66,7 @@ Synth("kick", [dur: 1]);
 (
 ~r = Routine({
 	inf.do {
-		var rep, dur, del, freq;
+		var rep, dur, del, freq, cutoffs;
 
 		rep = [1, 4, 6, 8].choose;
 		freq = [20, 30, 40, 50, 80].choose;
@@ -78,13 +79,19 @@ Synth("kick", [dur: 1]);
 			del = 0;
 		};
 
+		if (0.5.coin) {
+			cutoffs = [22050, freq];
+		} {
+			cutoffs = [freq, 22050];
+		};
+
 		rep.do {
 			s.bind {
 				Synth("kick", [dur: dur + del, freq: 80]);
 			};
 			del.wait;
 			s.bind {
-				Synth("resaw", [dur: dur, freq: freq]);
+				Synth("resaw", [dur: dur, freq: freq, cutoffs: cutoffs]);
 			};
 			dur.wait;
 		};

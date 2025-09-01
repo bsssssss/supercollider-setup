@@ -23,3 +23,8 @@ switch (z.choose.postln,
     0,   { \true }
 ).postln;
 )
+
+(
+if (true) { "wooh".postln };
+"nooo".postln;
+)

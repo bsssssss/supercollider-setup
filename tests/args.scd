@@ -1,3 +1,6 @@
 (
-{ |arg1 arg2 = 0, arg3(\symbol)| };
+{ arg ...args(\symb); args };
 )
+
+nil;
+

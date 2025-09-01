@@ -8,7 +8,7 @@ s.options.hardwareBufferSize = 128;
 // s.options.numInputBusChannels  = 0;
 
 s.options.numBuffers  = 1024 * 32; // increase this if you need to load more samples
-s.options.memSize     = 8192 * 16;  // increase this if you get "alloc failed" messages
+s.options.memSize     = 8192 * 16; // increase this if you get "alloc failed" messages
 s.options.numWireBufs = 1024 * 8;  // increase this if you get "exceeded number of interconnect buffers" messages
 s.options.maxNodes    = 1024 * 32; // increase this if you are getting drop outs and the message "too many nodes"
 
@@ -37,10 +37,16 @@ s.waitForBoot {
 	~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
 
 	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-banks.scd");
+
+	// ~dirt.loadSoundFilesToBank(
+	// 	"/Users/bss/Sounds/tidal_samples/tidal-drum-machines/machines/RolandTR808/*",
+	// 	bankName: "tr808",
+	// 	namingFunction: { |x| x.basename.replace("-", "_") }
+	// );
 	// s.sync; // optionally: wait for samples to be read
 
 	// MIDI SETUPS :
-	MIDIClient.init(verbose: false); /* <---- enable this !!! */
+	MIDIClient.init(verbose: false);
 	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-midi.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox&m8u.scd");

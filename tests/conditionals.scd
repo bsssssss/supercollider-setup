@@ -28,3 +28,7 @@ switch (z.choose.postln,
 if (true) { "wooh".postln };
 "nooo".postln;
 )
+
+(
+a = 1 ! 2;
+)

@@ -11,10 +11,12 @@
 // loadAndReplace.("/Users/bss/Documents/samples/percussions/", "_");
 // loadAndReplace.("/Users/bss/Documents/samples/tidal-samples/bs", "_", 2);
 
-~dirt.loadSoundFiles(
-	"/Users/bss/Sounds/tidal_samples/tidal-drum-machines/machines/*/*",
-	namingFunction: { |x| x.basename.replace("-", "_") }
-);
+//~dirt.loadSoundFiles(
+//	"/Users/bss/Sounds/tidal_samples/tidal-drum-machines/machines/*/*",
+//	namingFunction: { |x| x.basename.replace("-", "_") }
+//);
+
+load("/Users/bss/Sounds/tidal_samples/tidal-drum-machines/load-banks.scd");
 
 // ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/undo/*");
 // ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/jbk/*");

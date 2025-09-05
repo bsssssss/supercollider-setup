@@ -18,12 +18,8 @@ s.waitForBoot {
 	~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
 	//~looper = TidalLooper(~dirt);
 
-	// ~dirt.loadSoundFiles;   // load samples (path containing a wildcard can be passed in)
-	// for example: ~dirt.loadSoundFiles("/Users/myUserName/Dirt/samples/*");
-
 	~dirt.doNotReadYet = true;
-	//~drumMachinesDir = Quarks.all.detect({ |x| x.name == "tidal-drum-machines" }).localPath;
-	//~dirt.loadSoundFiles(~drumMachinesDir +/+ "machines" +/+ "*" +/+ "*", namingFunction: { |x| x.basename.replace("-","")});
+
 	~dirt.loadSoundFiles("~/Sounds/samples/addor");
 	~dirt.loadSoundFiles("~/Sounds/samples/clak/");
 	~dirt.loadSoundFiles("~/Sounds/samples/sinst/");
@@ -35,13 +31,9 @@ s.waitForBoot {
 	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
 	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
 
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-banks.scd");
+	TidalDrumMachines.loadBanks(~dirt);
+	//load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-banks.scd");
 
-	// ~dirt.loadSoundFilesToBank(
-	// 	"/Users/bss/Sounds/tidal_samples/tidal-drum-machines/machines/RolandTR808/*",
-	// 	bankName: "tr808",
-	// 	namingFunction: { |x| x.basename.replace("-", "_") }
-	// );
 	// s.sync; // optionally: wait for samples to be read
 
 	// MIDI SETUPS :
@@ -59,7 +51,8 @@ s.waitForBoot {
 	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-compressor.scd");
 
 	// Update database
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-extract-sounds.scd");
+	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-extract-data.scd");
+
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
 
 	//~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out

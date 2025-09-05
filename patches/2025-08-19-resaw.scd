@@ -28,7 +28,7 @@ SynthDef("kick", {
 	penv = penv + Env.perc(0, dur * 0.2, curve: -8).ar
 		.linlin(0, 1, 0, 50);
 
-	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: 0).ar(Done.freeSelf);
+	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: 8).ar(Done.freeSelf);
 	snd = snd * -3.dbamp;
 	snd = snd ! 2;
 
@@ -36,33 +36,8 @@ SynthDef("kick", {
 }).add;
 )
 
-
 Synth("resaw", [dur: 1]);
 Synth("kick", [dur: 1]);
-
-(
-~r = Routine({
-	inf.do {
-		var rep = [1, 3, 5, 7, 11, 19].choose;
-		var dur = [1/16, 1/12, 1/8, 1/6, 1/3, 1/2, 1, 2].choose;
-		var freq = [20, 33, 40, 50].choose;
-
-		if ((rep >= 3) && (dur >= (1/8))) { 
-			dur = dur / [4, 8, 16].choose;
-			freq = freq * 1.1;
-		};
-
-		rep.do {
-			s.bind {
-				Synth("resaw", [dur: dur, freq: freq, cutoffs: [22050, freq]]);
-				Synth("kick", [dur: dur]);
-			};
-			dur.wait;
-		};
-	}
-});
-~r.play;
-)
 
 (
 ~r = Routine({
@@ -89,13 +64,12 @@ Synth("kick", [dur: 1]);
 
 		rep.do {
 			s.bind {
-				Synth("kick", [dur: dur + del, freq: 40]);
+				Synth("kick", [dur: dur, freq: 40]);
 			};
 			del.wait;
 			s.bind {
 				Synth(
-					"resaw",
-					[
+					"resaw", [
 						dur: dur - del,
 						freq: freq,
 						cutoffs: cutoffs,

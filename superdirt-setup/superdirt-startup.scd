@@ -56,8 +56,7 @@ s.waitForBoot {
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
 
 	//~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out
-	//~dirt.start(57120, 0 ! 12); // 12 stereos mixdown
-	~dirt.start(57520, 0 ! 12);
+	~dirt.start(57120, 0 ! 12); // 12 stereos mixdown
 
 	SuperDirt.default = ~dirt; // make this instance available in sclang (optional)
 

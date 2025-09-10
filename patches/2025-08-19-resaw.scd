@@ -25,8 +25,8 @@ SynthDef("kick", {
 
 	penv = EnvGen.ar(Env([1,0], [0.01], [-8]))
 		.linlin(0, 1, freq, 500);
-	penv = penv + Env.perc(0, dur * 0.2, curve: -8).ar
-		.linlin(0, 1, 0, 50);
+	penv = penv + Env.perc(0, dur * (2/3), curve: -8).ar
+		.linlin(0, 1, 0, 36.midicps);
 
 	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: 8).ar(Done.freeSelf);
 	snd = snd * -3.dbamp;
@@ -64,7 +64,7 @@ Synth("kick", [dur: 1]);
 
 		rep.do {
 			s.bind {
-				Synth("kick", [dur: dur, freq: 40]);
+				Synth("kick", [dur: dur, freq: freq]);
 			};
 			del.wait;
 			s.bind {

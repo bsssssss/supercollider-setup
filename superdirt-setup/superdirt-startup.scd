@@ -26,10 +26,12 @@ s.waitForBoot {
 	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle_breaks/*");
 	~dirt.loadSoundFiles("~/Sounds/samples/sc/rrec/kickfm");
 
-	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks");
-	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
-	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
-	// ~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
+	if (PathName("/Volumes/T7 Shield").isFolder) {
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
+	};
 
 	TidalDrumMachines.loadBanks(~dirt);
 	//load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-banks.scd");

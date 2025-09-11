@@ -50,7 +50,7 @@ Synth("kick", [dur: 1]);
 
 		if (rep > 1) {
 			dur = [1/6, 1/8, 1/16, 1/32].choose;
-			del = 0;
+			del = [0, 0.5].choose * dur;
 		} {
 			dur = [1/2, 1, 1.5, 2, 3].choose;
 			del = dur * [0, 0.25, 0.5, 0.75].choose;

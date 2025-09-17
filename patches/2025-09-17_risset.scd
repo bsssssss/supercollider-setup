@@ -5,14 +5,27 @@ s.boot;
 
 SynthDef("hat", {
 	var snd;
-	snd = HPF.ar(WhiteNoise.ar(), 12000);
+	snd = HPF.ar(WhiteNoise.ar(), 8500);
 	snd = snd * Env.perc(\atk.kr(0.004), \rel.kr(0.1)).ar(Done.freeSelf);
 	snd = snd * \amp.kr(0.3);
 	snd = snd ! 2;
 	Out.ar(\bus.ir(0), snd);
 }).add;
-//Synth("hat");
 
+SynthDef("k", {
+	var snd;
+	snd = SinOsc.ar(Env.perc(0, 0.1).ar().linlin(0,1,30,500));
+	snd = snd * Env.linen(0,0,1,-5).ar(Done.freeSelf);
+	snd = snd * \amp.kr(0.1);
+	snd = snd ! 2;
+	Out.ar(\bus.ir(0), snd);
+}).add;
+)
+
+Synth("hat");
+Synth("k");
+
+(
 ~rissetR = Routine({
 	var play, playP,
 		dur, bpms, steps, baseTempo, amps;
@@ -26,18 +39,18 @@ SynthDef("hat", {
 		s.bind { Synth(synthDef, args) };
 	};
 
-	baseTempo = 190;
+	baseTempo = 400;
 	bpms      = [baseTempo, baseTempo * 0.5];
-	steps     = 128;
-	dur       = 1/4;
+	steps     = 64;
+	dur       = 1/2;
 
 	amps = [
 		[0.3, 0.3],
 		[0.3, 0.3 * (-70.dbamp)],
 	];
 
-	bpms = bpms.reverse;
-	amps = amps.reverse;
+	//bpms = bpms.reverse;
+	//amps = amps.reverse;
 
 	inf.do { |i|
 		var tempo, amp;
@@ -51,9 +64,9 @@ SynthDef("hat", {
 		};
 		amp = amp.wrapAt(i);
 
-		play.( "hat", [rel: 0.08, amp: amp], dur: dur);
+		play.("hat", [rel: 0.1, atk: 0.01, amp: amp], dur: dur);
 	};
 });
+~rissetR.play(clock: ~clock);
 )
 
-~rissetR.play(clock: ~clock);

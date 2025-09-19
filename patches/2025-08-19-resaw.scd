@@ -29,7 +29,7 @@ SynthDef("kick", {
 		.linlin(0, 1, 0, 36.midicps);
 
 	snd = SinOsc.ar(penv) * Env.perc(0, dur, curve: 8).ar(Done.freeSelf);
-	snd = snd * -3.dbamp;
+	snd = snd * -6.dbamp;
 	snd = snd ! 2;
 
 	Out.ar(\bus.kr(0), snd)

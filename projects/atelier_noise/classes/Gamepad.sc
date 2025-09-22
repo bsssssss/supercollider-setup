@@ -4,9 +4,7 @@
 Gamepad {
 	classvar <device;
 	var <vendorID, <productID, <path;
-	var <connectRoutine;
-	var <timeout;
-	var <disconnectedByUser;
+	var <connectRoutine, <timeout, <disconnectedByUser;
 
 	*new { |vendorID, productID, path, timeout|
 		^super.new.init(vendorID, productID, path, timeout);
@@ -18,6 +16,8 @@ Gamepad {
 		path = p;
 		timeout = t ?? 3;
 	}
+
+	device { ^device }
 
 	connect {
 		var foundDevices;

@@ -5,7 +5,7 @@ s.boot;
 
 SynthDef("hat", {
 	var snd;
-	snd = HPF.ar(WhiteNoise.ar(), 8500);
+	snd = HPF.ar(WhiteNoise.ar(), 10000);
 	snd = snd * Env.perc(\atk.kr(0.004), \rel.kr(0.1)).ar(Done.freeSelf);
 	snd = snd * \amp.kr(0.3);
 	snd = snd ! 2;
@@ -39,7 +39,7 @@ Synth("k");
 		s.bind { Synth(synthDef, args) };
 	};
 
-	baseTempo = 400;
+	baseTempo = 180;
 	bpms      = [baseTempo, baseTempo * 0.5];
 	steps     = 64;
 	dur       = 1/2;
@@ -49,8 +49,8 @@ Synth("k");
 		[0.3, 0.3 * (-70.dbamp)],
 	];
 
-	//bpms = bpms.reverse;
-	//amps = amps.reverse;
+	bpms = bpms.reverse;
+	amps = amps.reverse;
 
 	inf.do { |i|
 		var tempo, amp;

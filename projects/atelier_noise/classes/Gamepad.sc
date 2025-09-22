@@ -4,7 +4,7 @@
 Gamepad {
 	classvar <device;
 	var <vendorID, <productID, <path;
-	var <isConnected, <connectRoutine;
+	var <connectRoutine;
 	var <timeout;
 
 	*new { |vendorID, productID, path, timeout|
@@ -12,7 +12,6 @@ Gamepad {
 	}
 
 	init { |vID, pID, p, t|
-		isConnected = false;
 		vendorID = vID;
 		productID = pID;
 		path = p;
@@ -25,7 +24,6 @@ Gamepad {
 		foundDevices = HID.findBy(vendorID, productID, path);
 
 		if (foundDevices.isEmpty) { // If not found, retry
-			isConnected = false;
 			format("No device found with vendorID: %, productID: %, path: %", vendorID, productID, path).postln;
 			format("trying again in % seconds...\n", timeout).postln;
 			this.retryConnect;
@@ -43,29 +41,30 @@ Gamepad {
 		};
 	}
 
+	retryConnect {
+		connectRoutine = Routine({ timeout.wait; this.connect });
+		connectRoutine.play;
+	}
+
 	open { |deviceInfo|
-		if (device.isNil) {
+		if (not(this.isConnected)) {
 			"Connecting %...".format(deviceInfo.productName).postln;
 			device = deviceInfo.open;
 			device.closeAction = {
 				device = nil;
-				isConnected = false;
 				format("% disconnected", deviceInfo.productName).postln;
-				this.connect;
+				this.retryConnect;
 			};
-			isConnected = true;
 		} {
-			format("% already connected", device.productName).postln;
+			format("% is already connected to this instance", device.info.productName).postln;
 		};
 	}
 
-	retryConnect {
-		connectRoutine = Routine({ timeout.wait; this.connect });
-		if (isConnected) {
-			connectRoutine.stop;
-			connectRoutine = nil;
+	isConnected {
+		if (device.notNil) {
+			if (device.isOpen) { ^true } { ^false };
 		} {
-			connectRoutine.play;
+			^false;
 		};
 	}
 

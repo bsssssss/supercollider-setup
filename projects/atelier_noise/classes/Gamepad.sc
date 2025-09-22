@@ -6,6 +6,7 @@ Gamepad {
 	var <vendorID, <productID, <path;
 	var <connectRoutine;
 	var <timeout;
+	var <disconnectedByUser;
 
 	*new { |vendorID, productID, path, timeout|
 		^super.new.init(vendorID, productID, path, timeout);
@@ -22,6 +23,7 @@ Gamepad {
 		var foundDevices;
 		HID.findAvailable; // rescan
 		foundDevices = HID.findBy(vendorID, productID, path);
+		disconnectedByUser = false;
 
 		if (foundDevices.isEmpty) { // If not found, retry
 			format("No device found with vendorID: %, productID: %, path: %", vendorID, productID, path).postln;
@@ -41,11 +43,6 @@ Gamepad {
 		};
 	}
 
-	retryConnect {
-		connectRoutine = Routine({ timeout.wait; this.connect });
-		connectRoutine.play;
-	}
-
 	open { |deviceInfo|
 		if (not(this.isConnected)) {
 			"Connecting %...".format(deviceInfo.productName).postln;
@@ -53,7 +50,9 @@ Gamepad {
 			device.closeAction = {
 				device = nil;
 				format("% disconnected", deviceInfo.productName).postln;
-				this.retryConnect;
+				if (not(disconnectedByUser)) {
+					this.retryConnect;
+				};
 			};
 		} {
 			format("% is already connected to this instance", device.info.productName).postln;
@@ -66,6 +65,22 @@ Gamepad {
 		} {
 			^false;
 		};
+	}
+
+	disconnect {
+		if (device.notNil) {
+			if (device.isOpen) {
+				disconnectedByUser = true;
+				device.close
+			} {
+				format("% is not connected", device.info.productName);
+			};
+		}
+	}
+
+	retryConnect {
+		connectRoutine = Routine({ timeout.wait; this.connect });
+		connectRoutine.play;
 	}
 
 }

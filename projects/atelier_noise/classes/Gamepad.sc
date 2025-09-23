@@ -61,7 +61,7 @@ Gamepad {
 
 	isConnected {
 		if (device.notNil) {
-			if (device.isOpen) { ^true } { ^false };
+			^device.isOpen;
 		} {
 			^false;
 		};

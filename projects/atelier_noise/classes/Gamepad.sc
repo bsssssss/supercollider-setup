@@ -2,7 +2,7 @@
 */
 
 Gamepad {
-	classvar <device;
+	var <>device;
 	var <vendorID, <productID, <path;
 	var <connectRoutine, <timeout, <disconnectedByUser;
 
@@ -17,17 +17,16 @@ Gamepad {
 		timeout = t ?? 3;
 	}
 
-	device { ^device }
+	//device { ^device }
 
 	connect {
 		var foundDevices;
-		HID.findAvailable; // rescan
+		postln(""); HID.findAvailable; // rescan
 		foundDevices = HID.findBy(vendorID, productID, path);
 		disconnectedByUser = false;
 
 		if (foundDevices.isEmpty) { // If not found, retry
 			format("No device found with vendorID: %, productID: %, path: %", vendorID, productID, path).postln;
-			format("trying again in % seconds...\n", timeout).postln;
 			this.retryConnect;
 		} {
 			if (foundDevices.size == 1) {
@@ -40,6 +39,7 @@ Gamepad {
 					d.postInfo;
 				};
 			};
+			connectRoutine.stop; connectRoutine = nil;
 		};
 	}
 
@@ -79,8 +79,15 @@ Gamepad {
 	}
 
 	retryConnect {
-		connectRoutine = Routine({ timeout.wait; this.connect });
-		connectRoutine.play;
+		if (connectRoutine.isNil) { 
+			connectRoutine = Routine({
+				loop { 
+					format("trying again in % seconds...", timeout).postln;
+					timeout.wait; this.connect;
+				} 
+			});
+			connectRoutine.reset.play;
+		};
 	}
 
 }

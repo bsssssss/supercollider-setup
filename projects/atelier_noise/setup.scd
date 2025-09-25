@@ -1,11 +1,10 @@
-/* dualshock4 vendor and product ID: 1356, 2508
-*/
+/* dualshock4 vendor and product ID: 1356, 2508 */
 
 ~ds4 = Gamepad(1356, 2508);
 ~ds4.connect;
 ~ds4.disconnect;
 
-HID.debug = false;
+HID.debug = true;
 
 (
 SynthDef("k", {

@@ -1,93 +1,67 @@
-/* dualshock4 vendor and product ID: 1356, 2508
-*/
-
 Gamepad {
-	var <>device;
-	var <vendorID, <productID, <path;
-	var <connectRoutine, <timeout, <disconnectedByUser;
+	var <>userID;
+	var <controlNames;
+	var <callbacks;
 
-	*new { |vendorID, productID, path, timeout|
-		^super.new.init(vendorID, productID, path, timeout);
+	*new { |userID|
+		^super.new.init(userID);
 	}
 
-	init { |vID, pID, p, t|
-		vendorID = vID;
-		productID = pID;
-		path = p;
-		timeout = t ?? 3;
+	init { |uID|
+		userID = uID;
+		controlNames = [
+			\LX, \LY,
+			\RX, \RY,
+		];
+		this.initCallbacks;
+		this.makeOSCDefs;
 	}
 
-	//device { ^device }
+	makeOSCDefs {
+		controlNames.do { |controlName|
+			var path = format("/gamepad/%/%", userID, controlName);
+			OSCdef(format("%_%", userID, controlName), { |msg|
+				var value = msg[1];
+				this.callback(controlName, value);
 
-	connect {
-		var foundDevices;
-		postln(""); HID.findAvailable; // rescan
-		foundDevices = HID.findBy(vendorID, productID, path);
-		disconnectedByUser = false;
-
-		if (foundDevices.isEmpty) { // If not found, retry
-			format("No device found with vendorID: %, productID: %, path: %", vendorID, productID, path).postln;
-			this.retryConnect;
-		} {
-			if (foundDevices.size == 1) {
-				foundDevices.do {|d|
-					this.open(d);
-				};
-			} {
-				"Found more than one device !".postln;
-				foundDevices.do { |d| 
-					d.postInfo;
-				};
-			};
-			connectRoutine.stop; connectRoutine = nil;
-		};
-	}
-
-	open { |deviceInfo|
-		if (not(this.isConnected)) {
-			"Connecting %...".format(deviceInfo.productName).postln;
-			device = deviceInfo.open;
-			device.closeAction = {
-				device = nil;
-				format("% disconnected", deviceInfo.productName).postln;
-				if (not(disconnectedByUser)) {
-					this.retryConnect;
-				};
-			};
-		} {
-			format("% is already connected to this instance", device.info.productName).postln;
-		};
-	}
-
-	isConnected {
-		if (device.notNil) {
-			^device.isOpen;
-		} {
-			^false;
-		};
-	}
-
-	disconnect {
-		if (device.notNil) {
-			if (device.isOpen) {
-				disconnectedByUser = true;
-				device.close
-			} {
-				format("% is not connected", device.info.productName);
-			};
+			}, path, recvPort: 57130);
 		}
 	}
 
-	retryConnect {
-		if (connectRoutine.isNil) { 
-			connectRoutine = Routine({
-				loop { 
-					format("trying again in % seconds...", timeout).postln;
-					timeout.wait; this.connect;
-				} 
-			});
-			connectRoutine.reset.play;
-		};
+	initCallbacks {
+		callbacks = IdentityDictionary.new;
+		controlNames.do { |controlName|
+			callbacks[controlName] = [];
+		}
 	}
 
+	addControlFunc { |controlName, func|
+		callbacks[controlName] = callbacks[controlName].add(func);
+	}
+
+	clearControlFuncs { |controlName|
+		if (callbacks[controlName].isNil) {
+			"No function registered yet for %"
+				.format(controlName)
+				.postln;
+		} {
+			callbacks[controlName] = [];
+		}
+	}
+
+	callback { |controlName, value|
+		callbacks[controlName].do { |func|
+			func.value(value);
+		}
+	}
+
+	postCallbacks {
+		callbacks.keysValuesDo { |k, v|
+			format("%: % functions", k, v.size).postln;
+		}
+	}
+
+	clearAll {
+		this.initCallbacks;
+	}
 }

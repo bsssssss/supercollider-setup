@@ -7,3 +7,6 @@
 [submodule "quarks/superdirt"]
 	path = quarks/superdirt
 	url = git@github.com:bsssssss/SuperDirt.git
+[submodule "projects/atelier_noise"]
+	path = projects/atelier_noise
+	url = https://github.com/bsssssss/atelier_noise_sc.git

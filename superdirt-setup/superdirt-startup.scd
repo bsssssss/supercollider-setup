@@ -38,22 +38,24 @@ s.waitForBoot {
 
 	// s.sync; // optionally: wait for samples to be read
 
+	~root_path = "/Users/bss/supercollider/superdirt-setup";
+
 	// MIDI SETUPS :
 	MIDIClient.init(verbose: false);
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-midi.scd");
+	load(~root_path +/+ "tidal-midi.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox&m8u.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-m8u.scd");
 
 	// SYNTHS & FX
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "bs/synths/config.scd");
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "bs/fx/bs_fx.scd");
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "bs/global_fx/config.scd");
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-modules-order.scd");
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-compressor.scd");
+	load(~root_path +/+ "bs/synths/config.scd");
+	load(~root_path +/+ "bs/fx/bs_fx.scd");
+	load(~root_path +/+ "bs/global_fx/config.scd");
+	load(~root_path +/+ "dirt-modules-order.scd");
+	load(~root_path +/+ "dirt-compressor.scd");
 
 	// Update database
-	load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "dirt-extract-data.scd");
+	load(~root_path +/+ "dirt-extract-data.scd");
 
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
 

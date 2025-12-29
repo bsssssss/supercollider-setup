@@ -16,8 +16,6 @@ s.options.maxNodes    = 1024 * 32; // increase this if you are getting drop outs
 s.waitForBoot {
 	~dirt.stop; // stop any old ones, avoid duplicate dirt (if it is nil, this won't do anything)
 	~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
-	//~looper = TidalLooper(~dirt);
-
 	~dirt.doNotReadYet = true;
 
 	~dirt.loadSoundFiles("~/Sounds/samples/addor");
@@ -31,6 +29,8 @@ s.waitForBoot {
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/undo/*");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/jbk/*");
 	};
 
 	TidalDrumMachines.loadBanks(~dirt);
@@ -59,7 +59,7 @@ s.waitForBoot {
 
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
 
-	//~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out
+	// ~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out
 	~dirt.start(57120, 0 ! 12); // 12 stereos mixdown
 
 	SuperDirt.default = ~dirt; // make this instance available in sclang (optional)
@@ -72,5 +72,5 @@ s.waitForBoot {
 	);
 };
 
-s.latency = 0.3; // increase this if you get "late" messages
+s.latency = 0.5; // increase this if you get "late" messages
 )

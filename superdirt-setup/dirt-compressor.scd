@@ -4,8 +4,8 @@
 (
 Ndef(\dirtComp, { |amount=0.3, speed=50|
 	var in, max, env;
-	in = In.ar(0, ~dirt.numChannels);
 
+	in  = In.ar(0, ~dirt.numChannels);
 	max = Select.ar(ArrayMax.ar(in.abs)[1], in);
 	env = Fb1({ |in, out|
 		var env, prod;
@@ -16,8 +16,5 @@ Ndef(\dirtComp, { |amount=0.3, speed=50|
 	}, max, leakDC: false);
 
 	ReplaceOut.ar(0, in * amount.linlin(0, 1, 1, env * 0.2));
-}).play(
-	group: RootNode(Server.default),
-	addAction: \addToTail
-);
+}).play(group: RootNode(Server.default), addAction: \addToTail);
 )

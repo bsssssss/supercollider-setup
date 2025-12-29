@@ -12,22 +12,14 @@ var numChannels = ~dirt.numChannels;
 		slope    = \g_comp_slp.kr(1/4);
 		attack   = \g_comp_att.kr(0.05);
 		release  = \g_comp_rel.kr(0.3);
-
-
-
-		snd = In.ar(dryBus, numChannels);
-
-	// snd = if(snd.isArray) {snd} {[snd]};
+		snd      = In.ar(dryBus, numChannels);
 
 		amplitude = (Amplitude.ar(snd, attack, release) / snd.size.sqrt).max(-100.dbamp).ampdb;
 		amplitude = ((amplitude - treshold).max(0) * (slope-1)).lag(attack).dbamp;
-
 		snd = snd*amplitude;
-
 
 		DirtPause.ar(snd, 4);
 		ReplaceOut.ar(effectBus, snd);
-
 	}, [\ir, \ir]).add;
 )
 
@@ -38,5 +30,3 @@ var numChannels = ~dirt.numChannels;
 	x.initNodeTree;
 }
 )
-
-~dirt.orbits.do { |x| x.globalEffects.postln; " ----------".postln; }

@@ -1,6 +1,6 @@
 (
 var numChannels = ~dirt.numChannels;
-"Loading GVerb".postln;
+
 (1..SuperDirt.maxSampleNumChannels).do { |numChannels|
 	SynthDef("dirt_global_gverb" ++ numChannels, {
 		|dryBus, effectBus, gate=1, gverb_send=0|
@@ -19,8 +19,7 @@ s.sync;
 		.addFirst(GlobalDirtEffect(\dirt_global_gverb, [\gverb_send]));
 	x.initNodeTree;
 };
+
+"\tGverb [ok]".postln;
 )
 
-//~dirt.orbits.do { |x| 
-//	x.globalEffects.postln;
-//};

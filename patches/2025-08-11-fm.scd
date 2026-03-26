@@ -40,7 +40,7 @@ seq = { |synthDef, duration, args = #[]|
 Routine({
 	inf.do {
 		seq.("kick", [1,2,3].choose);
-		seq.("snare", 1.0);
+		seq.("snare", [1,2,3].choose);
 	};
 }).play;
 )

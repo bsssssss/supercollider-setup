@@ -23,14 +23,28 @@ s.waitForBoot {
 	~dirt.loadSoundFiles("~/Sounds/samples/sinst/");
 	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle_breaks/*");
 	~dirt.loadSoundFiles("~/Sounds/samples/sc/rrec/kickfm");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/autodafe/*");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle/junglebreaks");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle/junglebreaks2");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle/junglebreaks3");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/legowelt/*");
+	~dirt.loadSoundFiles("~/Sounds/tidal_samples/undo/*");
 
 	if (PathName("/Volumes/T7 Shield").isFolder) {
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks");
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/undo/*");
+		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks");
+		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
+		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
+		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
+		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/undo/*");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/jbk/*");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos2");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos3");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos4");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos5");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos6");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/adecoup");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/longs");
 	};
 
 	TidalDrumMachines.loadBanks(~dirt);

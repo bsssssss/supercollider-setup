@@ -33,6 +33,7 @@ effects.do { |fx|
 		x.globalEffects = x.globalEffects.addFirst(GlobalDirtEffect(fx[0], fx[1]));
 		x.initNodeTree;
 	};
+	postf("\t% %\n", fx[0], fx[1]);
 };
 
 "".postln;

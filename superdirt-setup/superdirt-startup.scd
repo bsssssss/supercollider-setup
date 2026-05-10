@@ -14,7 +14,7 @@ s.options.maxNodes    = 1024 * 32; // increase this if you are getting drop outs
 
 // boot the server and start SuperDirt
 s.waitForBoot {
-	~dirt.stop; // stop any old ones, avoid duplicate dirt (if it is nil, this won't do anything)
+	~dirt.stop;              // stop any old ones, avoid duplicate dirt (if it is nil, this won't do anything)
 	~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
 	~dirt.doNotReadYet = true;
 
@@ -29,13 +29,9 @@ s.waitForBoot {
 	~dirt.loadSoundFiles("~/Sounds/tidal_samples/jungle/junglebreaks3");
 	~dirt.loadSoundFiles("~/Sounds/tidal_samples/legowelt/*");
 	~dirt.loadSoundFiles("~/Sounds/tidal_samples/undo/*");
+	~dirt.loadSoundFiles("~/Sounds/samples/chansons/bruant");
 
 	if (PathName("/Volumes/T7 Shield").isFolder) {
-		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks");
-		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks2");
-		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/jungle/junglebreaks3");
-		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/legowelt/*");
-		//~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/undo/*");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/samples/tidal-samples/jbk/*");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos2");
@@ -44,12 +40,10 @@ s.waitForBoot {
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos5");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/zoom/stereos6");
 		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/adecoup");
-		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/longs");
+		~dirt.loadSoundFiles("/Volumes/T7 Shield/sons/Archives/longs/longs");
 	};
 
 	TidalDrumMachines.loadBanks(~dirt);
-	//load(PathName.new(thisProcess.nowExecutingPath).parentPath +/+ "tidal-banks.scd");
-
 	// s.sync; // optionally: wait for samples to be read
 
 	~root_path = "/Users/bss/supercollider/superdirt-setup";
@@ -64,19 +58,20 @@ s.waitForBoot {
 	// SYNTHS & FX
 	load(~root_path +/+ "bs/synths/config.scd");
 	load(~root_path +/+ "bs/fx/bs_fx.scd");
-	load(~root_path +/+ "bs/global_fx/config.scd");
-	load(~root_path +/+ "dirt-modules-order.scd");
 	load(~root_path +/+ "dirt-compressor.scd");
+	load(~root_path +/+ "dirt-modules-order.scd");
 
-	// Update database
-	load(~root_path +/+ "dirt-extract-data.scd");
-
+	// scala setup
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
+
 
 	// ~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out
 	~dirt.start(57120, 0 ! 12); // 12 stereos mixdown
-
 	SuperDirt.default = ~dirt; // make this instance available in sclang (optional)
+	"".postln;
+
+	// custom global effects
+	load(~root_path +/+ "bs/global_fx/config.scd");
 
 	// optional, needed for convenient access from sclang:
 	(
@@ -84,7 +79,12 @@ s.waitForBoot {
 		~d5 = ~dirt.orbits[4]; ~d6  = ~dirt.orbits[5]; ~d7  = ~dirt.orbits[6];  ~d8  = ~dirt.orbits[7];
 		~d9 = ~dirt.orbits[8]; ~d10 = ~dirt.orbits[9]; ~d11 = ~dirt.orbits[10]; ~d12 = ~dirt.orbits[11];
 	);
+
+	// Update database
+	load(~root_path +/+ "dirt-extract-data.scd");
 };
 
 s.latency = 0.5; // increase this if you get "late" messages
 )
+
+SuperDirt.resetEverything;

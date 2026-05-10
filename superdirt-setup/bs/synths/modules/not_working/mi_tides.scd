@@ -1,6 +1,6 @@
 (
 SynthDef(\tides, {
-    |out=0, freq=440, sustain=1, pan=0, begin=0, end=1, speed=1, accelerate=0|
+    |out=0, freq=440, sustain=1, pan=0, begin=0, end=1, speed=1, accelerate=0, cps=0.5|
 
     var snd;
     var dur  = sustain * (end - begin);

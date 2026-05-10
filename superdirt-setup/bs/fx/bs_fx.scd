@@ -2,25 +2,25 @@
 ~dirt.addModule('lpf2', { |dirtEvent|
 	dirtEvent.sendSynth('lpf2' ++ ~numChannels,
 		[
-			sustain:     ~sustain,
-			out:         ~out,
-			lp2_pre:     ~lp2_pre   ?? 0.4,
-			lp2_f:       ~lp2_f,
-			lp2_q:       ~lp2_q,
-			lp2_mix:     ~lp2_mix   ?? 1,
-			lp2_fEnv:    ~lp2_fEnv,
-			lp2_fTilt:   ~lp2_fTilt,
-			lp2_fPlat:   ~lp2_fPlat,
-			lp2_fCurve:  ~lp2_fCurve ?? (-4),
+			sustain: ~sustain,
+			out: ~out,
+			lp2_pre: ~lp2_pre ?? 0.4,
+			lp2_f: ~lp2_f,
+			lp2_q: ~lp2_q,
+			lp2_mix: ~lp2_mix ?? 1,
+			lp2_fEnv: ~lp2_fEnv,
+			lp2_fTilt: ~lp2_fTilt,
+			lp2_fPlat: ~lp2_fPlat,
+			lp2_fCurve: ~lp2_fCurve ?? (-4),
 		]
 	)
-}, {~lp2_f.notNil});
+}, { ~lp2_f.notNil });
 );
 (
 SynthDef("lpf2" ++ ~dirt.numChannels, {
 	|out, in, sustain=1, speed=1|
-	var signalDry, signal, freq, res, pre, mix, fenv;
 
+	var signalDry, signal, freq, res, pre, mix, fenv;
 	var envV = (\lp2_fEnv.kr(0)).linexp(0, 1, 0.1, 20000);
 
 	freq = \lp2_f.kr(1000);
@@ -34,12 +34,12 @@ SynthDef("lpf2" ++ ~dirt.numChannels, {
 	freq = freq.max(20, SampleRate.ir/2);
 
 	signalDry = In.ar(out, ~dirt.numChannels);
-	signal    = DFM1.ar(
-		in:        signalDry,
-		freq:      freq,
-		res:       res,
+	signal = DFM1.ar(
+		in: signalDry,
+		freq: freq,
+		res: res,
 		inputgain: pre,
-		type:      0
+		type: 0
 	);
 	signal = (signal * mix) + (signalDry * (1 - mix));
   ReplaceOut.ar(out, signal)
@@ -50,19 +50,19 @@ SynthDef("lpf2" ++ ~dirt.numChannels, {
 ~dirt.addModule('hpf2', { |dirtEvent|
 	dirtEvent.sendSynth('hpf2' ++ ~numChannels,
 		[
-			sustain:     ~sustain,
-			out:         ~out,
-			hp2_pre:     ~hp2_pre   ?? 1,
-			hp2_f:       ~hp2_f,
-			hp2_q:       ~hp2_q,
-			hp2_mix:     ~hp2_mix   ?? 1,
-			hp2_fEnv:    ~hp2_fEnv,
-			hp2_fTilt:   ~hp2_fTilt,
-			hp2_fPlat:   ~hp2_fPlat,
-			hp2_fCurve:  ~hp2_fCurve ?? (-4),
+			sustain: ~sustain,
+			out: ~out,
+			hp2_pre: ~hp2_pre ?? 1,
+			hp2_f: ~hp2_f,
+			hp2_q: ~hp2_q,
+			hp2_mix: ~hp2_mix ?? 1,
+			hp2_fEnv: ~hp2_fEnv,
+			hp2_fTilt: ~hp2_fTilt,
+			hp2_fPlat: ~hp2_fPlat,
+			hp2_fCurve: ~hp2_fCurve ?? (-4),
 		]
 	)
-}, {~hp2_f.notNil});
+}, { ~hp2_f.notNil });
 );
 (
 SynthDef("hpf2" ++ ~dirt.numChannels, {
@@ -79,12 +79,12 @@ SynthDef("hpf2" ++ ~dirt.numChannels, {
 	freq = freq.max(20, SampleRate.ir/2);
 
 	signalDry = In.ar(out, ~dirt.numChannels);
-	signal    = DFM1.ar(
-		in:        signalDry,
-		freq:      freq,
-		res:       res,
+	signal = DFM1.ar(
+		in: signalDry,
+		freq: freq,
+		res: res,
 		inputgain: pre,
-		type:      1
+		type: 1
 	);
 	signal = (signal * mix) + (signalDry * (1 - mix));
   ReplaceOut.ar(out, signal)
@@ -95,19 +95,19 @@ SynthDef("hpf2" ++ ~dirt.numChannels, {
 ~dirt.addModule('brf', { |dirtEvent|
 	dirtEvent.sendSynth('brf' ++ ~numChannels,
 		[
-			sustain:    ~sustain,
-			out:        ~out,
-			br_pre:     ~br_pre    ?? 0.4,
-			br_f:       ~br_f,
-			br_q:       ~br_q      ?? 1,
-			br_mix:     ~br_mix    ?? 1,
-			br_fEnv:    ~br_fEnv,
-			br_fTilt:   ~br_fTilt,
-			br_fPlat:   ~br_fPlat,
-			br_fCurve:  ~br_fCurve ?? (-4),
+			sustain: ~sustain,
+			out: ~out,
+			br_pre: ~br_pre ?? 0.4,
+			br_f: ~br_f,
+			br_q: ~br_q ?? 1,
+			br_mix: ~br_mix ?? 1,
+			br_fEnv: ~br_fEnv,
+			br_fTilt: ~br_fTilt,
+			br_fPlat: ~br_fPlat,
+			br_fCurve: ~br_fCurve ?? (-4),
 		]
 	)
-}, {~br_f.notNil});
+}, { ~br_f.notNil });
 );
 (
 SynthDef("brf" ++ ~dirt.numChannels, {
@@ -125,10 +125,10 @@ SynthDef("brf" ++ ~dirt.numChannels, {
 	freq = freq.max(20, SampleRate.ir/2);
 
 	signalDry = In.ar(out, ~dirt.numChannels);
-	signal    = BBandStop.ar(
-		in:        signalDry,
-		freq:      freq,
-		bw:        res
+	signal = BBandStop.ar(
+		in: signalDry,
+		freq: freq,
+		bw: res
 	);
 	signal = (signal * mix) + (signalDry * (1 - mix));
 	ReplaceOut.ar(out, signal)
@@ -139,20 +139,20 @@ SynthDef("brf" ++ ~dirt.numChannels, {
 ~dirt.addModule('bp2', { |dirtEvent|
 	dirtEvent.sendSynth('bp2' ++ ~numChannels,
 		[
-			sustain:     ~sustain,
-			out:         ~out,
-			bp2_pre:     ~bp2_pre    ?? 0.4,
-			bp2_f:       ~bp2_f,
-			bp2_q:       ~bp2_q      ?? 0,
-			bp2_mix:     ~bp2_mix    ?? 1,
-			bp2_fEnv:    ~bp2_fEnv,
-			bp2_fTilt:   ~bp2_fTilt,
-			bp2_fPlat:   ~bp2_fPlat,
-			bp2_fCurve:  ~bp2_fCurve ?? (-4),
-			bp2_sat:     ~bp2_sat    ?? 0.9
+			sustain: ~sustain,
+			out: ~out,
+			bp2_pre: ~bp2_pre ?? 0.4,
+			bp2_f: ~bp2_f,
+			bp2_q: ~bp2_q ?? 0,
+			bp2_mix: ~bp2_mix ?? 1,
+			bp2_fEnv: ~bp2_fEnv,
+			bp2_fTilt: ~bp2_fTilt,
+			bp2_fPlat: ~bp2_fPlat,
+			bp2_fCurve: ~bp2_fCurve ?? (-4),
+			bp2_sat: ~bp2_sat ?? 0.9
 		]
 	)
-}, {~bp2_f.notNil});
+}, { ~bp2_f.notNil });
 );
 (
 SynthDef("bp2" ++ ~dirt.numChannels, {
@@ -170,10 +170,10 @@ SynthDef("bp2" ++ ~dirt.numChannels, {
 	freq  = freq.max(20, SampleRate.ir/2);
 
 	signalDry = In.ar(out, ~dirt.numChannels);
-	signal    = BMoog.ar(
-		in:   signalDry,
+	signal = BMoog.ar(
+		in: signalDry,
 		freq: freq,
-		q:    res,
+		q: res,
 		mode: 3,
 		saturation: \bp2_sat.kr(0.9)
 	);
@@ -188,14 +188,14 @@ SynthDef("bp2" ++ ~dirt.numChannels, {
 ~dirt.addModule('combf', { |dirtEvent|
 	dirtEvent.sendSynth('combf' ++ ~numChannels,
 		[
-			sustain:   ~sustain,
-			out:       ~out,
+			sustain: ~sustain,
+			out: ~out,
 			combf_mix: ~combf_mix ?? 0.5,
-			combf_fb:  ~combf_fb  ?? 0.001,
-			combf:     ~combf
+			combf_fb: ~combf_fb ?? 0.001,
+			combf: ~combf
 		]
 	)
-}, {~combf.notNil});
+}, { ~combf.notNil });
 );
 (
 SynthDef("combf" ++ ~dirt.numChannels, {
@@ -218,7 +218,7 @@ SynthDef("combf" ++ ~dirt.numChannels, {
 	dirtEvent.sendSynth('mu' ++ ~dirt.numChannels,
 		[ mu: ~mu, out: ~out ]
 	)
-}, {~mu.notNil});
+}, { ~mu.notNil });
 );
 (
   SynthDef("mu" ++ ~dirt.numChannels, {|out,mu=0|

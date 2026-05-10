@@ -24,9 +24,9 @@ SynthDef("dirt_global_chorus" ++ numChannels, {
 	| dryBus, effectBus, gate=1, chorus_wet=0, chorus_speed=8, chorus_depth=0.1, chorus_predelay=20, chorus_fbk=0 |
 
 	var in       = In.ar(dryBus, numChannels);
-	var predelay = chorus_predelay.clip(5, 10000) / 1000;
+	var predelay = (chorus_predelay / 1000).clip(0, 0.2);
 	var depth    = chorus_depth.clip(0, 1);
-	var snd      = CombL.ar(in, 10, SinOsc.kr(chorus_speed).linlin(-1, 1, 0, 1) * depth + predelay, chorus_fbk);
+	var snd      = CombL.ar(in, 0.2, SinOsc.kr(chorus_speed).linlin(-1, 1, 0, 1) * depth + predelay, chorus_fbk);
 	snd          = XFade2.ar(in * (1 - chorus_wet), snd * chorus_wet);
 
 	DirtPause.ar(snd, 4);

@@ -49,8 +49,8 @@ Synth("k");
 		[0.3, 0.3 * (-70.dbamp)],
 	];
 
-	bpms = bpms.reverse;
-	amps = amps.reverse;
+	bpms = bpms;
+	amps = amps;
 
 	inf.do { |i|
 		var tempo, amp;

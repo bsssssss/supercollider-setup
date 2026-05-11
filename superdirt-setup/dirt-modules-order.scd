@@ -50,6 +50,8 @@
 	'tremolo',
 	'envelope',
 	'grenvelo',
+
+	// must be last
 	'out_to',
 	'map_from'
 ]);

@@ -20,7 +20,7 @@ var file_paths = pathMatch("modules/*.scd".resolveRelative);
 file_paths.do { |p| 
     p.load;
     s.sync;
-    "\t%\n".postf(p) 
+    "\t%\n".postf(PathName(p).fileNameWithoutExtension);
 };
 "".postln;
 

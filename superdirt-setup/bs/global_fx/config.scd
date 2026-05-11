@@ -1,11 +1,5 @@
 (
-var effects;
-
-"*** Loading custom global effects ***".postln;
-load("./synthdefs.scd".resolveRelative);
-s.sync;
-
-effects = [
+var effects = [
 	[
 		\dirt_global_miverb, [
 			\miverb_send,
@@ -27,6 +21,11 @@ effects = [
 		] 
 	],
 ];
+
+"*** Loading custom global effects ***".postln;
+load("./synthdefs.scd".resolveRelative);
+s.sync;
+
 
 effects.do { |fx|
 	~dirt.orbits.do { |x|

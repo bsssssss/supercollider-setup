@@ -16,8 +16,12 @@ s.options.maxNodes    = 1024 * 32; // increase this if you are getting drop outs
 s.waitForBoot {
 	~dirt.stop;              // stop any old ones, avoid duplicate dirt (if it is nil, this won't do anything)
 	~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
-	~dirt.doNotReadYet = true;
 
+	/*
+	 * Samples
+	 */
+
+	~dirt.doNotReadYet = true;
 	~dirt.loadSoundFiles("~/Sounds/samples/addor");
 	~dirt.loadSoundFiles("~/Sounds/samples/clak/");
 	~dirt.loadSoundFiles("~/Sounds/samples/sinst/");
@@ -46,32 +50,37 @@ s.waitForBoot {
 	TidalDrumMachines.loadBanks(~dirt);
 	// s.sync; // optionally: wait for samples to be read
 
-	~root_path = "/Users/bss/supercollider/superdirt-setup";
+	postln("");
+	postln("*************");
+	postln("* Bss Setup *");
+	postln("*************");
+	postln("");
 
-	// MIDI SETUPS :
+	// MIDI
 	MIDIClient.init(verbose: false);
-	load(~root_path +/+ "tidal-midi.scd");
+	load("tidal-midi.scd".resolveRelative);
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-audiobox&m8u.scd");
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/tidal-midi-m8u.scd");
 
 	// SYNTHS & FX
-	load(~root_path +/+ "bs/synths/config.scd");
-	load(~root_path +/+ "bs/fx/bs_fx.scd");
-	load(~root_path +/+ "dirt-compressor.scd");
-	load(~root_path +/+ "dirt-modules-order.scd");
+	load("bs/synths/config.scd".resolveRelative);
+	load("bs/fx/bs_fx.scd".resolveRelative);
+	load("dirt-compressor.scd".resolveRelative);
+	load("dirt-modules-order.scd".resolveRelative);
 
 	// scala setup
 	// load(PathName.new(thisProcess.nowExecutingPath).parentPath ++ "/scala.scd");
 
 
 	// ~dirt.start(57120, [0, 2, 4, 6, 8, 10, 12, 14]); // 8 stereos out
+
 	~dirt.start(57120, 0 ! 12); // 12 stereos mixdown
 	SuperDirt.default = ~dirt; // make this instance available in sclang (optional)
 	"".postln;
 
 	// custom global effects
-	load(~root_path +/+ "bs/global_fx/config.scd");
+	load("bs/global_fx/config.scd".resolveRelative);
 
 	// optional, needed for convenient access from sclang:
 	(
@@ -81,7 +90,7 @@ s.waitForBoot {
 	);
 
 	// Update database
-	load(~root_path +/+ "dirt-extract-data.scd");
+	load("dirt-extract-data.scd".resolveRelative);
 };
 
 s.latency = 0.5; // increase this if you get "late" messages
